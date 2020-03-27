@@ -1,0 +1,10 @@
+import React from 'react';
+
+// Podemos usar props como parametro, porém é recomendado desestruturar passando apenas os valores que serão recebidos.
+export default function Header({ children }) {
+    return (
+        <header>
+            <h1>{children}</h1>
+        </header>
+    );
+}

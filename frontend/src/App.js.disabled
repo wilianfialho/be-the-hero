@@ -1,0 +1,31 @@
+import React, { useState } from 'react';
+
+import Logon from './pages/Logon'; // não precisa colocar index, pois quando importa uma pasta, sempre será considerado o arquivo index.js dentro da pasta
+
+/**
+ * Estado / State -> armazena valores
+ * <Header title="Semana OminiStack" /> // Recuperando informações via props
+ * Outra opção: props.children pra recuperar o valor
+ * Para refletir o valor de count após a alteração feita pela função, precisamos usar o conceito de estado, para isso, precisamos importar tb o useState
+ * counter++ não podemos usar dessa forma, pois não podemos mudar o valor do estado de uma forma direta. Precisamos sobrepor
+ * Conceito de estado: Toda vez que o nosso componente precisar armazenar alguma informação dentro dele, nós não criamos uma variável comum, mas sempre o estado, pois as alterações são refletidas na interface. 
+ */
+
+
+function App() {
+
+  const [ counter, setCounter ] = useState(0); // retorna um Array [valor, funcaoQueAtualizaValor]
+
+  function increment() {
+    setCounter(counter+1);
+  }
+
+  return (
+    <div>
+      <Header>Contador: {counter}</Header>
+      <button onClick={increment}>Incrementar</button>
+    </div>
+  );
+}
+
+export default App;
