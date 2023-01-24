@@ -1,16 +1,23 @@
 const express = require('express');
 const cors = require('cors');
-const routes = require('./routes'); // usar ./ para indicar que é a mesma pasta do arquivo index e nao um pacote
+const routes = require('./routes');
 
 const app = express();
 
-// quando for para produção, podemos passar um objeto dentro do construtor de cors indicando o oring
-// {origin: 'http://meusite.com'} - irá indicar que somente esse frontend poderá acessar
-// deixando vazio, indicamos que todos os frontends poderão usar
-app.use(cors());
-app.use(express.json()); // Setando o uso do JSON como padrão para comunicação entre as rotas
+// Passando objeto com origin específico para produção
+// ou deixando vazio para permitir todos os origin em desenvolvimento
+const corsOptions = {
+  origin: process.env.CORS_ORIGIN || '',
+};
+app.use(cors(corsOptions));
+app.use(express.json());
 app.use(routes);
 
+// Tratando erro de processamento de requisição
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+});
 
 /**
  * Tipos de parâmetros:
@@ -30,5 +37,8 @@ app.use(routes);
    * Query Builder: table('users').select('*').where()  // knex.js será o utilizado
    */
 
-app.listen(3333);
+
+app.listen(3333, () => {
+    console.log('Server running on port 3333')
+});
 
